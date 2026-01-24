@@ -81,6 +81,8 @@ cargo run -- convert -i  audio_5b39782e-22f5-4ae5-860a-65f429446304.mp3 -q karao
 # without ai
 cargo run -- convert -i audio_5b39782e-22f5-4ae5-860a-65f429446304.mp3 -q karaoke --fast-karaoke
 
+cargo run -- batch -d ./input_songs
+
 
 
 cargo build --release
