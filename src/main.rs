@@ -117,6 +117,20 @@ async fn process_file(input: &str, quality_name: &str, verbose: bool, fast_karao
     // ─── KARAOKE LOGIC ───
     if quality_name == "karaoke" {
         if fast_karaoke {
+            // OPTION B: AI Vocal Removal (High Quality, 8GB RAM Safe)
+            if verbose { println!("🧠 Running AI Separation (Model: MDX-Net)..."); }
+            let ai_status = Command::new("audio-separator")
+                .arg(input)
+                .arg("--model_name").arg("UVR-MDX-NET-Inst_HQ_3") 
+                .arg("--output_format").arg("FLAC")
+                .arg("--output_dir").arg(".")
+                .arg("--instrumental_only")
+                .status()?;
+
+            if verbose && ai_status.success() { 
+                println!("✅ AI Karaoke finished. (Note: Check for Instrumental file in folder)"); 
+            }
+        } else {
             if verbose {
                 println!("⚡ Using Advanced Phase-Cancellation Karaoke Filter (Strong vocals ↓ | Bass/Kick preserved)...");
             }
@@ -143,21 +157,6 @@ async fn process_file(input: &str, quality_name: &str, verbose: bool, fast_karao
                 } else {
                     println!("❌ FFmpeg failed with status: {:?}", status);
                 }
-            }
-
-        } else {
-            // OPTION B: AI Vocal Removal (High Quality, 8GB RAM Safe)
-            if verbose { println!("🧠 Running AI Separation (Model: MDX-Net)..."); }
-            let ai_status = Command::new("audio-separator")
-                .arg(input)
-                .arg("--model_name").arg("UVR-MDX-NET-Inst_HQ_3") 
-                .arg("--output_format").arg("FLAC")
-                .arg("--output_dir").arg(".")
-                .arg("--instrumental_only")
-                .status()?;
-
-            if verbose && ai_status.success() { 
-                println!("✅ AI Karaoke finished. (Note: Check for Instrumental file in folder)"); 
             }
         }
     } else {
