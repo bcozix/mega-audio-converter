@@ -2,6 +2,20 @@
 name = "audio_converter"
 version = "0.1.0"
 edition = "2024"
+description = "Cross-platform audio converter with batch and karaoke support"
+repository = "https://github.com/bcozix/mega-audio-converter"
+license = "MIT"
+authors = ["moekyawsoe109@gmail.com"]
+homepage = "https://github.com/bcozix/mega-audio-converter"
+keywords = ["audio", "converter", "mp3", "karaoke", "batch"]
+categories = ["audio", "command-line-utilities"]
+readme = "README.md"
+
+[package.metadata.wix]
+upgrade-guid = "7F82A296-9071-4522-9A0F-61A51D382817"
+path-guid = "C9897A55-086B-499D-AD13-ECE2DBC929AE"
+license = false
+eula = false
 
 [dependencies]
 clap = { version = "4.5", features = ["derive"] }
@@ -10,3 +24,12 @@ indicatif = "0.17"
 tokio = { version = "1", features = ["full"] }
 anyhow = "1.0"
 walkdir = "2.5"
+
+[profile.release]
+lto = true
+strip = true
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
