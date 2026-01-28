@@ -1,6 +1,6 @@
 [package]
 name = "audio_converter"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2024"
 description = "Cross-platform audio converter with batch and karaoke support"
 repository = "https://github.com/bcozix/mega-audio-converter"
